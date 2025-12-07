@@ -1,267 +1,557 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>    <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUTFIDEV UNBAN WHATSAPP V2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --support: #ff9e00;
+            --dark: #0a0a23;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3, #7209b7);
+            --glass: rgba(255, 255, 255, 0.08);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', monospace;
         }
         
         body {
-            background-color: #0a0a0a;
-            color: #00ff00;
-            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
             min-height: 100vh;
-            position: relative;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(67, 97, 238, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(247, 37, 133, 0.15) 0%, transparent 20%);
         }
         
-        /* Efek Matrix */
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.2;
-            pointer-events: none;
-        }
-        
-        /* Halaman Splash */
+        /* Splash Screen Modern */
         .splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #000;
+            background: var(--gradient);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeOut 0.5s forwards 3s;
         }
         
-        .logo-animation {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00ff00;
-            margin-bottom: 20px;
-            letter-spacing: 5px;
-            animation: glitch 2s infinite, fadeIn 2s;
+        .logo-container {
+            position: relative;
+            margin-bottom: 80px;
         }
         
-        .loading-bar {
+        .logo-main {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(76, 201, 240, 0.5);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .logo-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .loader {
             width: 300px;
             height: 4px;
-            background-color: #003300;
-            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 20px;
+            margin-top: 30px;
+            position: relative;
         }
         
-        .loading-progress {
+        .loader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             height: 100%;
             width: 0%;
-            background-color: #00ff00;
-            animation: loading 3s forwards;
+            background: linear-gradient(90deg, #4cc9f0, #f72585);
+            border-radius: 10px;
+            animation: loading 3s ease-in-out forwards;
         }
         
-        /* Container Utama */
+        /* Floating Particles Background */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(76, 201, 240, 0.3);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+        
+        /* Main Container */
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-            z-index: 1;
-            display: none;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 3.2s;
         }
         
-        header {
+        /* Header dengan Hero Section */
+        .hero {
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #00ff00;
-            margin-bottom: 30px;
+            padding: 60px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
+            overflow: hidden;
         }
         
-        .logo {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+        
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4361ee, #f72585);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00ff00;
-            margin-bottom: 10px;
-            letter-spacing: 3px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
+            animation: pulse 2s infinite;
         }
         
-        .version {
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #4361ee, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
             font-size: 1rem;
-            color: #008800;
-            margin-bottom: 15px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
         }
         
         .tagline {
-            font-size: 1.2rem;
-            color: #00cc00;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        /* Update Info & Support Section */
+        .info-support-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .update-box, .support-box {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .update-box:hover, .support-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .update-box {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .support-box {
+            border-top: 4px solid var(--support);
+        }
+        
+        .box-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
         }
         
+        .box-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .update-box .box-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .support-box .box-icon {
+            background: linear-gradient(135deg, var(--support), #ff6b00);
+        }
+        
+        .box-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .box-content {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .update-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .update-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
+            color: white;
+        }
+        
+        .support-btn {
+            background: linear-gradient(135deg, var(--support), #ff6b00);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 158, 0, 0.3);
+        }
+        
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 158, 0, 0.4);
+            color: white;
+        }
+        
+        /* Main Content */
         .main-content {
-            background-color: rgba(0, 20, 0, 0.7);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            padding: 25px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-            margin-bottom: 30px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
         
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         
-        label {
+        .input-label {
             display: block;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.2rem;
         }
         
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            background-color: #001100;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            font-size: 1rem;
-            border-radius: 3px;
+            padding: 18px 20px 18px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            border-radius: 12px;
             outline: none;
+            transition: all 0.3s;
         }
         
         input[type="text"]:focus {
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(67, 97, 238, 0.3);
         }
         
+        /* Button Group */
         .buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
         }
         
-        button {
-            flex: 1;
-            padding: 15px;
-            background-color: #003300;
-            border: 1px solid #00ff00;
-            color: #00ff00;
+        .btn {
+            padding: 18px 25px;
+            border: none;
+            border-radius: 12px;
             font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
         
-        button:hover {
-            background-color: #00aa00;
-            color: #000;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #b5179e);
+            color: white;
+            box-shadow: 0 10px 20px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(247, 37, 133, 0.4);
+        }
+        
+        /* Status Container */
+        .status-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .status-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-clear {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .status-clear:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
         .status {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #001100;
-            border: 1px solid #00ff00;
-            border-radius: 3px;
-            min-height: 100px;
-            font-size: 0.9rem;
+            min-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
-            max-height: 200px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
         }
         
         .status-line {
-            margin-bottom: 8px;
-            animation: type 0.1s;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease-out;
         }
         
-        .success {
-            color: #00ff00;
+        .status-line.success {
+            border-left-color: #4cc9f0;
+            color: #4cc9f0;
         }
         
-        .error {
-            color: #ff3333;
+        .status-line.error {
+            border-left-color: #f72585;
+            color: #f72585;
         }
         
-        .warning {
-            color: #ffff00;
+        .status-line.warning {
+            border-left-color: #f8961e;
+            color: #f8961e;
         }
         
-        .info {
-            color: #00ffff;
+        .status-line.info {
+            border-left-color: #4361ee;
+            color: #90e0ef;
         }
         
+        /* Footer */
         footer {
             text-align: center;
-            padding: 20px 0;
-            border-top: 1px solid #00ff00;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
-            color: #008800;
         }
         
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #00ff00, transparent);
-            top: 0;
-            left: 0;
-            animation: scan 3s linear infinite;
-            opacity: 0.7;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
-        .update-info {
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .update-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #003300;
-            border: 1px solid #00ff00;
-            color: #00ff00;
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            border-radius: 3px;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: color 0.3s;
         }
         
-        .update-btn:hover {
-            background-color: #00aa00;
-            color: #000;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        .footer-link:hover {
+            color: var(--success);
         }
         
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes type {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
         }
         
         @keyframes loading {
@@ -269,121 +559,252 @@
             100% { width: 100%; }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         
-        /* Responsif */
-        @media (max-width: 600px) {
-            .buttons {
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(67, 97, 238, 0.6); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo-main, .logo-text {
+                font-size: 2.5rem;
+            }
+            
+            .hero-logo {
                 flex-direction: column;
+                gap: 15px;
             }
             
-            .logo {
-                font-size: 1.8rem;
-            }
-            
-            .logo-animation {
+            .logo-image {
+                width: 100px;
+                height: 100px;
                 font-size: 2rem;
+            }
+            
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 25px;
+            }
+            
+            .info-support-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .box-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .action-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-main, .logo-text {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .hero {
+                padding: 40px 15px;
+            }
+            
+            .version-badge {
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+            
+            .info-support-section {
+                gap: 20px;
+            }
+            
+            .update-box, .support-box {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Splash Screen -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="logo-animation">LUTFIDEV</div>
-        <div style="color: #00cc00; margin-top: 10px;">UNBAN WHATSAPP V2</div>
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
+    <div class="splash-screen">
+        <div class="logo-container">
+            <div class="logo-main">LUTFIDEV</div>
+            <div class="logo-subtitle">UNBAN WHATSAPP V2</div>
         </div>
+        <div class="loader"></div>
     </div>
     
-    <!-- Halaman Utama -->
-    <div class="matrix-bg" id="matrix"></div>
-    <div class="scan-line"></div>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
     
-    <div class="container" id="mainContainer">
-        <header>
-            <div class="logo glitch">LUTFIDEV UNBAN WHATSAPP</div>
-            <div class="version">VERSION 2.0</div>
-            <div class="tagline">HACK THE SYSTEM - UNBAN YOUR NUMBER</div>
-        </header>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-logo">
+                <div class="logo-image">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="logo-text">LUTFIDEV UNBAN WHATSAPP</div>
+            </div>
+            
+            <div class="version-badge">VERSION 2.0</div>
+            <p class="tagline">Sistem canggih untuk membuka blokir nomor WhatsApp dengan antarmuka modern dan proses otomatis.</p>
+        </section>
         
-        <div class="update-info">
-            <p>Untuk informasi terbaru tentang update dan cara penggunaan:</p>
-            <a href="https://whatsapp.com/channel/0029VbBx5iF545uyHuvE4Q2W" class="update-btn" target="_blank">INFO UPDATE</a>
+        <!-- Info & Support Section -->
+        <div class="info-support-section">
+            <!-- Update Info Box -->
+            <div class="update-box">
+                <div class="box-header">
+                    <div class="box-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <div class="box-title">Informasi Update Terbaru</div>
+                        <div class="box-subtitle">Selalu dapatkan info terkini</div>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <p>Untuk informasi terbaru tentang update, tips penggunaan, dan panduan lengkap, ikuti channel resmi kami di WhatsApp.</p>
+                </div>
+                <a href="https://whatsapp.com/channel/0029VbBx5iF545uyHuvE4Q2W" class="action-btn update-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> INFO UPDATE CHANNEL
+                </a>
+            </div>
+            
+            <!-- Support Box -->
+            <div class="support-box">
+                <div class="box-header">
+                    <div class="box-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div>
+                        <div class="box-title">Support Pengembang</div>
+                        <div class="box-subtitle">Dukung karya kami</div>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <p>Jika tool ini membantu Anda, pertimbangkan untuk memberikan dukungan agar kami dapat terus mengembangkan dan memperbarui sistem ini.</p>
+                </div>
+                <a href="https://saweria.co/LutfiDev" class="action-btn support-btn" target="_blank">
+                    <i class="fas fa-donate"></i> SUPPORT KAMI
+                </a>
+            </div>
         </div>
         
+        <!-- Main Content -->
         <main class="main-content">
             <div class="input-group">
-                <label for="phoneNumber">MASUKKAN NOMOR WHATSAPP YANG TERKENA BAN:</label>
-                <input type="text" id="phoneNumber" placeholder="contoh: +6281234567890" autocomplete="off">
+                <label class="input-label" for="phoneNumber">
+                    <i class="fas fa-phone-alt"></i> MASUKKAN NOMOR WHATSAPP YANG TERKENA BAN:
+                </label>
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <input type="text" id="phoneNumber" placeholder="Contoh: +6281234567890" autocomplete="off">
+                </div>
             </div>
             
             <div class="buttons">
-                <button id="unbanBtn">PROSES UNBAN</button>
-                <button id="resetBtn">RESET</button>
-                <button id="infoBtn">INFO</button>
+                <button class="btn btn-primary" id="unbanBtn">
+                    <i class="fas fa-unlock"></i> PROSES UNBAN
+                </button>
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> RESET
+                </button>
+                <button class="btn btn-accent" id="infoBtn">
+                    <i class="fas fa-question-circle"></i> INFO & PANDUAN
+                </button>
             </div>
             
-            <div class="status" id="status">
-                <div class="status-line info">SISTEM LUTFIDEV UNBAN V2 DIAKTIFKAN</div>
-                <div class="status-line info">SIAP MEMPROSES PERMINTAAN UNBAN...</div>
+            <div class="status-container">
+                <div class="status-header">
+                    <div class="status-title">
+                        <i class="fas fa-terminal"></i> STATUS SISTEM
+                    </div>
+                    <button class="status-clear" id="clearStatus">
+                        <i class="fas fa-trash"></i> Hapus Log
+                    </button>
+                </div>
+                <div class="status" id="status">
+                    <div class="status-line info">Sistem LUTFIDEV Unban V2 diaktifkan...</div>
+                    <div class="status-line info">Menginisialisasi antarmuka pengguna...</div>
+                    <div class="status-line success">Sistem siap memproses permintaan unban!</div>
+                </div>
             </div>
         </main>
         
+        <!-- Footer -->
         <footer>
-            <p>© 2023 LUTFIDEV UNBAN WHATSAPP V2 - APLIKASI GRATIS NO JUAL JUAL</p>
-            <p>FOR EDUCATIONAL PURPOSES ONLY</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link"><i class="fas fa-shield-alt"></i> Keamanan</a>
+                <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> Bantuan</a>
+                <a href="#" class="footer-link"><i class="fas fa-envelope"></i> Kontak</a>
+                <a href="#" class="footer-link"><i class="fas fa-file-contract"></i> Kebijakan</a>
+            </div>
+            <p>© 2023 LUTFIDEV UNBAN WHATSAPP V2</p>
+            <p>APLIKASI INI GRATIS JIKA ANDA MENJUAL TANPA IZIN MAKA ANDA MEMAKAN UANG HARAM</p>
         </footer>
     </div>
 
     <script>
-        // Efek Matrix di background
-        function createMatrix() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const matrix = document.getElementById('matrix');
-            matrix.appendChild(canvas);
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
             
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-            const charArray = chars.split('');
-            const fontSize = 14;
-            const columns = canvas.width / fontSize;
-            const drops = [];
-            
-            for (let x = 0; x < columns; x++) {
-                drops[x] = 1;
-            }
-            
-            function draw() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                ctx.fillStyle = '#00ff00';
-                ctx.font = fontSize + 'px monospace';
+                // Random size and position
+                const size = Math.random() * 20 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
                 
-                for (let i = 0; i < drops.length; i++) {
-                    const text = charArray[Math.floor(Math.random() * charArray.length)];
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    
-                    drops[i]++;
-                }
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
             }
-            
-            setInterval(draw, 35);
         }
         
-        // Fungsi untuk menambahkan status baru
+        // Add status message
         function addStatus(message, type = 'info') {
             const status = document.getElementById('status');
             const newLine = document.createElement('div');
@@ -391,104 +812,178 @@
             newLine.textContent = `> ${message}`;
             status.appendChild(newLine);
             status.scrollTop = status.scrollHeight;
+            
+            // Add visual effect
+            newLine.style.animation = 'slideIn 0.3s ease-out';
         }
         
-        // Fungsi untuk mengirim ke Gmail
+        // Send to Gmail function
         function sendToGmail(phoneNumber) {
             const subject = "Permohonan Unban WhatsApp - Nomor: " + phoneNumber;
             const body = `Halo Yang terhormat WhatsApp saya tidak bisa mendapatkan login karena terblokir karena saya sudah melakukan spam ke seseorang yang saya kenal harap pulihkan kembali dan maafkan perilaku yang saya lakukan mohon maaf Dan Hapus blokir WhatsApp saya. Dan nomor WhatsApp saya adalah: ${phoneNumber}`;
 
-            // Membuat URL untuk membuka aplikasi Gmail langsung
             const gmailUrl = `mailto:support@support.whatsapp.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             
-            // Membuka aplikasi Gmail langsung (bukan tab baru)
-            window.location.href = gmailUrl;
-            
+            window.open(gmailUrl, '_blank');
             return true;
         }
         
-        // Fungsi utama untuk proses unban
+        // Process unban function
         function processUnban() {
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const unbanBtn = document.getElementById('unbanBtn');
             
             if (!phoneNumber) {
                 addStatus('ERROR: Nomor WhatsApp tidak boleh kosong!', 'error');
+                // Shake animation for input
+                document.getElementById('phoneNumber').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.getElementById('phoneNumber').style.animation = '';
+                }, 500);
                 return;
             }
             
             if (!phoneNumber.match(/^\+?[1-9]\d{1,14}$/)) {
-                addStatus('ERROR: Format nomor tidak valid!', 'error');
+                addStatus('ERROR: Format nomor tidak valid! Gunakan format internasional (+628...)', 'error');
                 return;
             }
             
+            // Disable button during process
+            unbanBtn.disabled = true;
+            unbanBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+            
             addStatus(`Memulai proses unban untuk nomor: ${phoneNumber}`, 'warning');
             
-            // Simulasi proses unban yang lebih cepat
-            setTimeout(() => {
-                addStatus('Memverifikasi nomor...', 'info');
-            }, 500);
+            // Simulate processing steps with better animations
+            const steps = [
+                {delay: 800, msg: 'Memverifikasi format nomor...', type: 'info'},
+                {delay: 1500, msg: 'Menghubungkan ke server WhatsApp...', type: 'info'},
+                {delay: 2200, msg: 'Menganalisis status akun...', type: 'warning'},
+                {delay: 3000, msg: 'Mempersiapkan template email resmi...', type: 'info'},
+                {delay: 3800, msg: 'Membuka aplikasi email...', type: 'success'}
+            ];
             
-            setTimeout(() => {
-                addStatus('Mempersiapkan template email...', 'info');
-            }, 1000);
+            let stepIndex = 0;
             
-            setTimeout(() => {
-                addStatus('Membuka aplikasi Gmail...', 'warning');
-                
-                // Langsung buka Gmail tanpa delay tambahan
-                const success = sendToGmail(phoneNumber);
-                
-                if (success) {
-                    addStatus('SUKSES: Membuka aplikasi Gmail!', 'success');
-                    addStatus('Email telah disiapkan otomatis...', 'success');
-                    addStatus('Tinggal klik KIRIM di aplikasi Gmail Anda', 'info');
-                    addStatus('Email ditujukan ke: support@support.whatsapp.com', 'info');
+            function processStep() {
+                if (stepIndex < steps.length) {
+                    const step = steps[stepIndex];
+                    setTimeout(() => {
+                        addStatus(step.msg, step.type);
+                        stepIndex++;
+                        processStep();
+                    }, step.delay - (stepIndex > 0 ? steps[stepIndex-1].delay : 0));
+                } else {
+                    // Open Gmail after all steps
+                    setTimeout(() => {
+                        const success = sendToGmail(phoneNumber);
+                        
+                        if (success) {
+                            addStatus('SUKSES: Membuka aplikasi email!', 'success');
+                            addStatus('Template email telah disiapkan otomatis.', 'success');
+                            addStatus('Tinggal klik KIRIM di aplikasi email Anda.', 'info');
+                            addStatus('Email ditujukan ke: support@support.whatsapp.com', 'info');
+                            
+                            // Success animation
+                            document.getElementById('status').parentElement.style.boxShadow = '0 0 30px rgba(76, 201, 240, 0.5)';
+                            setTimeout(() => {
+                                document.getElementById('status').parentElement.style.boxShadow = '';
+                            }, 2000);
+                        }
+                        
+                        // Re-enable button
+                        unbanBtn.disabled = false;
+                        unbanBtn.innerHTML = '<i class="fas fa-unlock"></i> PROSES UNBAN';
+                    }, 500);
                 }
-            }, 1500);
+            }
+            
+            processStep();
         }
         
-        // Fungsi reset
+        // Reset form function
         function resetForm() {
             document.getElementById('phoneNumber').value = '';
             const status = document.getElementById('status');
             status.innerHTML = '';
-            addStatus('SISTEM LUTFIDEV UNBAN V2 DI-RESET', 'info');
-            addStatus('SIAP MEMPROSES PERMINTAAN UNBAN BARU...', 'info');
+            
+            // Add reset confirmation
+            addStatus('Sistem LUTFIDEV Unban V2 telah di-reset', 'info');
+            addStatus('Silakan masukkan nomor WhatsApp yang baru', 'info');
+            
+            // Focus on input
+            document.getElementById('phoneNumber').focus();
         }
         
-        // Fungsi info
+        // Show info function
         function showInfo() {
             const status = document.getElementById('status');
             status.innerHTML = '';
-            addStatus('=== LUTFIDEV UNBAN WHATSAPP V2 ===', 'info');
-            addStatus('Dibuat oleh: Lutfi Dev', 'info');
-            addStatus('Versi: 2.0', 'info');
-            addStatus('Fitur: Unban nomor WhatsApp yang diblokir', 'info');
-            addStatus('Cara penggunaan:', 'info');
-            addStatus('1. Masukkan nomor WhatsApp yang terkena ban', 'info');
-            addStatus('2. Klik tombol PROSES UNBAN', 'info');
-            addStatus('3. Aplikasi akan langsung membuka Gmail', 'info');
-            addStatus('4. Template email sudah otomatis terisi', 'info');
-            addStatus('5. Klik KIRIM di aplikasi Gmail Anda', 'info');
-            addStatus('================================', 'info');
+            
+            const infoSteps = [
+                '=== LUTFIDEV UNBAN WHATSAPP V2 ===',
+                'Sistem Pemulihan Akun WhatsApp Terblokir',
+                'Dikembangkan oleh: LUTFIDEV Team',
+                'Versi: 2.0 (Modern Interface)',
+                '--------------------------------',
+                'CARA PENGGUNAAN:',
+                '1. Masukkan nomor WhatsApp (format internasional)',
+                '2. Klik tombol PROSES UNBAN',
+                '3. Sistem akan memverifikasi dan memproses',
+                '4. Aplikasi email akan terbuka otomatis',
+                '5. Template email sudah terisi - tinggal KIRIM',
+                '6. Tunggu respons dari WhatsApp Support',
+                '--------------------------------',
+                'CATATAN:',
+                '- Gunakan format nomor yang benar (+62...)',
+                '- Pastikan koneksi internet stabil',
+                '- Proses ini membantu mengajukan permohonan resmi',
+                '================================'
+            ];
+            
+            infoSteps.forEach((step, index) => {
+                setTimeout(() => {
+                    const type = step.includes('ERROR') ? 'error' : 
+                                step.includes('SUKSES') ? 'success' : 
+                                step.includes('CATATAN') || step.includes('CARA') ? 'warning' : 'info';
+                    addStatus(step, type);
+                }, index * 100);
+            });
         }
         
-        // Event listeners
-        document.getElementById('unbanBtn').addEventListener('click', processUnban);
-        document.getElementById('resetBtn').addEventListener('click', resetForm);
-        document.getElementById('infoBtn').addEventListener('click', showInfo);
+        // Clear status function
+        function clearStatus() {
+            const status = document.getElementById('status');
+            status.innerHTML = '';
+            addStatus('Log status telah dibersihkan', 'info');
+        }
         
-        // Inisialisasi
-        window.addEventListener('load', () => {
-            createMatrix();
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create particles
+            createParticles();
             
-            // Tampilkan splash screen selama 3 detik
+            // Event listeners
+            document.getElementById('unbanBtn').addEventListener('click', processUnban);
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+            document.getElementById('infoBtn').addEventListener('click', showInfo);
+            document.getElementById('clearStatus').addEventListener('click', clearStatus);
+            
+            // Add shake animation for errors
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Auto-hide splash screen (backup)
             setTimeout(() => {
-                document.getElementById('splashScreen').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-                addStatus('SISTEM LUTFIDEV UNBAN V2 BERHASIL DIAKTIFKAN', 'success');
-                addStatus('HACKER STYLE INTERFACE READY', 'success');
-            }, 3000);
+                document.querySelector('.splash-screen').style.display = 'none';
+            }, 3500);
         });
     </script>
 </body>
