@@ -3,1033 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unband WhatsApp V3</title>
+    <title>Unband WhatsApp V3 - LutfiDev</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #00E676;
-            --primary-dark: #00C853;
-            --secondary: #6A11CB;
-            --tertiary: #FF416C;
-            --dark: #0F172A;
-            --light: #F8FAFC;
-            --gray: #64748B;
-            --gradient-primary: linear-gradient(135deg, var(--primary), #00BCD4);
-            --gradient-secondary: linear-gradient(135deg, var(--secondary), #2575FC);
-            --gradient-tertiary: linear-gradient(135deg, var(--tertiary), #FF4B2B);
-            --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-            min-height: 100vh;
-            color: var(--light);
-            overflow-x: hidden;
         }
-
-        /* LutfiDev Intro Animation */
-        #introAnimation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
+        
+        body {
+            background: linear-gradient(135deg, #0c2461, #1ABC9C);
+            color: white;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            animation: fadeOut 1s ease 2.5s forwards;
+            padding: 20px;
         }
-
-        .logo-animation {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-pulse {
-            font-size: 4rem;
-            color: var(--primary);
-            animation: pulse 1.5s infinite, rotate 3s linear infinite;
-            text-shadow: 0 0 30px rgba(0, 230, 118, 0.5);
-        }
-
-        .text-reveal {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .text-reveal::before {
-            content: "LutfiDev";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: slide 2s ease 0.5s;
-        }
-
-        .tagline-animation {
-            font-size: 1.2rem;
-            color: var(--gray);
-            opacity: 0;
-            animation: fadeIn 1s ease 1.5s forwards;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .loading-bar {
-            width: 200px;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            margin-top: 30px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .loading-progress {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: loading 2s linear;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes slide {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes loading {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-
-        /* Floating Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(0, 230, 118, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Main Container */
+        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
-            opacity: 0;
-            animation: fadeIn 1s ease 3s forwards;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 40px 20px;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0,230,118,0.1) 0%, transparent 70%);
-            animation: rotate-bg 20s linear infinite;
-        }
-
-        @keyframes rotate-bg {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .logo {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 25px;
-        }
-
-        .logo-icon {
-            font-size: 5rem;
-            color: var(--primary);
-            position: relative;
-            animation: float-icon 3s ease-in-out infinite;
-        }
-
-        .logo-icon::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle, rgba(0,230,118,0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-        }
-
-        @keyframes float-icon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-
-        .version {
-            font-size: 1.2rem;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-left: 15px;
-            vertical-align: middle;
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-
-        /* Input Card */
-        .input-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .input-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(0, 230, 118, 0.3);
-        }
-
-        .input-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 4px;
-            background: var(--gradient-primary);
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title i {
-            color: var(--primary);
-            font-size: 2rem;
-        }
-
-        .input-group {
-            margin-bottom: 35px;
-        }
-
-        .input-label {
-            display: block;
-            margin-bottom: 15px;
-            color: var(--light);
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .input-label i {
-            color: var(--primary);
-        }
-
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 15px;
-            padding: 5px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.1);
-            transform: scale(1.02);
-        }
-
-        .prefix {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        input[type="tel"] {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 15px;
-            font-size: 1.2rem;
-            outline: none;
-            font-family: 'Poppins', sans-serif;
-            color: var(--light);
-            min-width: 0;
-        }
-
-        input::placeholder {
-            color: var(--gray);
-        }
-
-        .input-hint {
-            display: block;
-            margin-top: 10px;
-            color: var(--gray);
-            font-size: 0.9rem;
-            padding-left: 10px;
-        }
-
-        /* Template Preview Section */
-        .template-preview {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
-            border: 2px dashed rgba(0, 230, 118, 0.3);
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .template-preview.show {
-            display: block;
-            animation: slideUp 0.5s ease;
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .preview-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .preview-content {
-            white-space: pre-wrap;
-            line-height: 1.6;
-            color: var(--light);
-            font-size: 0.95rem;
-        }
-
-        .preview-highlight {
-            background: rgba(0, 230, 118, 0.1);
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-weight: 600;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Unband Buttons */
-        .unband-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .unband-btn {
-            display: flex;
-            align-items: center;
-            padding: 30px 25px;
-            border: none;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: left;
-            color: white;
-            font-family: 'Poppins', sans-serif;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
         }
-
-        .unband-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.7s;
-        }
-
-        .unband-btn:hover::before {
-            left: 100%;
-        }
-
-        .unband-btn:hover {
-            transform: perspective(1000px) translateY(-10px) rotateX(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .unband-btn:active {
-            transform: perspective(1000px) translateY(-5px) scale(0.98);
-        }
-
-        .btn-icon {
-            font-size: 3rem;
-            margin-right: 20px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn-content {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .btn-desc {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .btn-badge {
+        
+        .developer-text {
             position: absolute;
             top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            right: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #25D366;
+            text-shadow: 0 0 10px rgba(37, 211, 102, 0.7);
+            letter-spacing: 1px;
         }
-
-        /* Button Colors */
-        .btn-primary {
-            background: var(--gradient-primary);
-        }
-
-        .btn-secondary {
-            background: var(--gradient-secondary);
-        }
-
-        .btn-tertiary {
-            background: var(--gradient-tertiary);
-        }
-
-        /* Stats Section */
-        .stats-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        
+        .app-header {
             text-align: center;
-        }
-
-        .stats-title {
-            font-size: 1.5rem;
             margin-bottom: 25px;
-            color: var(--light);
         }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-item {
-            padding: 20px;
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 230, 118, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
+        
+        .app-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #25D366, #128C7E);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            line-height: 1;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-top: 8px;
+        
+        .app-subtitle {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
         }
-
-        /* Footer */
-        .footer {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .footer-buttons {
+        
+        .status {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-        }
-
-        .footer-btn {
-            display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 18px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .role {
+            background: rgba(37, 211, 102, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-right: 15px;
+            border: 1px solid rgba(37, 211, 102, 0.5);
+        }
+        
+        .exp {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.5);
+        }
+        
+        .input-section {
+            margin-bottom: 25px;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #ddd;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #25D366;
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+        }
+        
+        .select-section {
+            margin-bottom: 30px;
+        }
+        
+        .select-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #ddd;
+        }
+        
+        .bug-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .bug-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
-
-        .footer-btn::before {
+        
+        .bug-option:hover {
+            background: rgba(37, 211, 102, 0.2);
+            border-color: rgba(37, 211, 102, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .bug-option.active {
+            background: rgba(37, 211, 102, 0.3);
+            border-color: #25D366;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+        }
+        
+        .bug-number {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(37, 211, 102, 0.3);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .send-btn {
+            width: 100%;
+            padding: 17px;
+            background: linear-gradient(to right, #25D366, #128C7E);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+        }
+        
+        .send-btn:active {
+            transform: translateY(0);
+        }
+        
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .footer-btn {
+            flex: 1;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-btn:hover {
+            background: rgba(37, 211, 102, 0.2);
+            border-color: rgba(37, 211, 102, 0.5);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .copyright span {
+            color: #25D366;
+            font-weight: 600;
+        }
+        
+        /* Animasi LutfiDev */
+        .dev-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 3s forwards 3s;
+        }
+        
+        .animated-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(to right, #25D366, #128C7E, #075E54);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            letter-spacing: 2px;
+        }
+        
+        .animated-text::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.7s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            animation: shine 3s forwards 0.5s;
         }
-
-        .footer-btn:hover::before {
-            left: 100%;
+        
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
         }
-
-        .footer-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
-
-        .update-btn {
-            background: var(--gradient-secondary);
-            color: white;
-        }
-
-        .support-btn {
-            background: var(--gradient-tertiary);
-            color: white;
-        }
-
-        .footer-info {
-            color: var(--gray);
-            font-size: 0.95rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .footer-info p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .disclaimer {
-            background: rgba(255, 193, 7, 0.1);
-            color: #FFC107;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            margin-top: 25px;
-            display: inline-block;
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            transform: translateX(400px);
-            opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000;
-            font-weight: 600;
-            max-width: 350px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .toast.show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        .toast.error {
-            background: var(--gradient-tertiary);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        
+        /* Responsif */
+        @media (max-width: 500px) {
             .container {
-                padding: 15px;
+                padding: 20px;
             }
             
-            h1 {
-                font-size: 2.5rem;
+            .app-title {
+                font-size: 24px;
             }
             
-            .logo-icon {
-                font-size: 4rem;
-            }
-            
-            .input-card {
-                padding: 25px;
-            }
-            
-            .unband-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .unband-btn {
-                padding: 25px;
-            }
-            
-            .btn-icon {
-                font-size: 2.5rem;
+            .animated-text {
+                font-size: 36px;
             }
             
             .footer-buttons {
                 flex-direction: column;
-                align-items: center;
             }
-            
-            .footer-btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .text-reveal {
-                font-size: 2rem;
-            }
-            
-            .logo-pulse {
-                font-size: 3rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 25px 15px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .tagline {
-                font-size: 1.1rem;
-            }
-            
-            .input-wrapper {
-                flex-direction: column;
-                align-items: stretch;
-                background: transparent;
-                padding: 0;
-            }
-            
-            .prefix {
-                margin-right: 0;
-                margin-bottom: 10px;
-                justify-content: center;
-                border-radius: 12px;
-            }
-            
-            input[type="tel"] {
-                background: rgba(15, 23, 42, 0.8);
-                border-radius: 12px;
-                border: 2px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .unband-btn {
-                flex-direction: column;
-                text-align: center;
-                padding: 25px 20px;
-            }
-            
-            .btn-icon {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            .btn-badge {
-                position: static;
-                margin-top: 10px;
-                display: inline-block;
-            }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gradient-primary);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
         }
     </style>
 </head>
 <body>
-    <!-- LutfiDev Intro Animation -->
-    <div id="introAnimation">
-        <div class="logo-animation">
-            <div class="logo-pulse">
-                <i class="fab fa-whatsapp"></i>
+    <!-- Animasi LutfiDev -->
+    <div class="dev-animation" id="devAnimation">
+        <div class="animated-text">LutfiDev</div>
+    </div>
+
+    <!-- Aplikasi Utama -->
+    <div class="container">
+        <div class="developer-text"></div>
+        
+        <div class="app-header">
+            <h1 class="app-title">Unband WhatsApp V3</h1>
+            <p class="app-subtitle">"Premium" Unban Tool</p>
+            
+            <div class="status">
+                <div class="role">ROLE: OWNER</div>
+                <div class="exp">EXP: 5Yd</div>
             </div>
-            <div class="text-reveal">LutfiDev</div>
-            <div class="tagline-animation">Creating Amazing Web Experiences</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
+        </div>
+        
+        <div class="input-section">
+            <label class="input-label">NOMOR TARGET</label>
+            <input type="text" class="input-field" id="targetNumber" placeholder="contoh: 628xxxxxxxxxxx" value="628xxxxxxxxxxx">
+        </div>
+        
+        <div class="select-section">
+            <label class="select-label">PILIH TEKS UNBAN</label>
+            <div class="bug-options">
+                <div class="bug-option" data-bug="1">
+                    Unban WhatsApp 1 (Ban Spam)
+                    <span class="bug-number">1</span>
+                </div>
+                <div class="bug-option" data-bug="2">
+                    Unban WhatsApp 2 (Ban Permanen)
+                    <span class="bug-number">2</span>
+                </div>
+                <div class="bug-option" data-bug="3">
+                    Unban WhatsApp 3 (Ban Batu)
+                    <span class="bug-number">3</span>
+                </div>
             </div>
+        </div>
+        
+        <button class="send-btn" id="sendBtn">
+            <i class="fas fa-paper-plane"></i> KIRIM UNBAN REQUEST
+        </button>
+        
+        <div class="footer-buttons">
+            <button class="footer-btn" id="updateBtn">
+                <i class="fas fa-bell"></i> INFO UPDATE
+            </button>
+            <button class="footer-btn" id="supportBtn">
+                <i class="fas fa-heart"></i> SUPPORT
+            </button>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2026 APLIKASI UNBAND V3" | DEVELOPER BY <span>™LutfiDev</span>
         </div>
     </div>
 
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-            </div>
-            <h1>Unband WhatsApp <span class="version">V3</span></h1>
-            <p class="tagline">Kirim permintaan unband WhatsApp secara otomatis dengan satu klik</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Input Section -->
-            <section class="input-card">
-                <h2 class="section-title">
-                    <i class="fas fa-mobile-alt"></i>
-                    Masukkan Nomor WhatsApp
-                </h2>
-                
-                <div class="input-group">
-                    <label class="input-label">
-                        <i class="fas fa-phone"></i>
-                        Nomor WhatsApp
-                    </label>
-                    <div class="input-wrapper">
-                        <div class="prefix">
-                            <i class="fas fa-flag"></i>
-                            +62
-                        </div>
-                        <input 
-                            type="tel" 
-                            id="phoneNumber" 
-                            placeholder="81234567890"
-                            maxlength="13"
-                            oninput="formatPhoneNumber(this)">
-                    </div>
-                    <small class="input-hint">Masukkan nomor tanpa +62 (contoh: 81234567890)</small>
-                </div>
-
-                <!-- Template Preview -->
-                <div class="template-preview" id="templatePreview">
-                    <div class="preview-header">
-                        <span class="preview-title" id="previewTemplateTitle">Template Preview</span>
-                        <button onclick="hidePreview()" style="background: none; border: none; color: var(--gray); cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="preview-content" id="previewContent">
-                        Pilih tombol unband untuk melihat preview...
-                    </div>
-                </div>
-
-                <!-- Unband Buttons -->
-                <div class="action-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-paper-plane"></i>
-                        Pilih Jenis Unband
-                    </h3>
-                    <p class="instruction" style="color: var(--gray); margin-bottom: 25px; text-align: center;">
-                        Pilih template yang sesuai dengan situasi Anda
-                    </p>
-                    
-                    <div class="unband-buttons">
-                        <button class="unband-btn btn-primary" onclick="showPreview(1)">
-                            <div class="btn-icon">
-                                <i class="fas fa-hands-helping"></i>
-                            </div>
-                            <div class="btn-content">
-                                <span class="btn-title">Unband Template 1</span>
-                                <span class="btn-desc">Pembukaan blokir umum & sopan</span>
-                            </div>
-                        </button>
-                        
-                        <button class="unband-btn btn-secondary" onclick="showPreview(2)">
-                            <div class="btn-icon">
-                                <i class="fas fa-user-shield"></i>
-                            </div>
-                            <div class="btn-content">
-                                <span class="btn-title">Unband Template 2</span>
-                                <span class="btn-desc">Untuk penggunaan app tidak resmi</span>
-                            </div>
-                        </button>
-                        
-                        <button class="unband-btn btn-tertiary" onclick="showPreview(3)">
-                            <div class="btn-icon">
-                                <i class="fas fa-balance-scale"></i>
-                            </div>
-                            <div class="btn-content">
-                                <span class="btn-title">Unband Template 3</span>
-                                <span class="btn-desc">Appeal untuk kesalahan laporan</span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Stats Section -->
-            <section class="stats-card">
-                <h3 class="stats-title">
-                    <i class="fas fa-chart-line"></i>
-                    Statistik Penggunaan
-                </h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalRequests">1,542</div>
-                        <div class="stat-label">Total Requests</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="successRate">92%</div>
-                        <div class="stat-label">Success Rate</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="activeUsers">3.2K</div>
-                        <div class="stat-label">Active Users</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="avgTime">32s</div>
-                        <div class="stat-label">Avg. Time Saved</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-buttons">
-                <a href="https://whatsapp.com/channel/0029VbBx5iF545uyHuvE4Q2W" 
-                   class="footer-btn update-btn" 
-                   target="_blank">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Info Update</span>
-                </a>
-                
-                <a href="https://saweria.co/LutfiDev" 
-                   class="footer-btn support-btn" 
-                   target="_blank">
-                    <i class="fas fa-heart"></i>
-                    <span>Support Developer</span>
-                </a>
-            </div>
-            
-            <div class="footer-info">
-                <p>© 2026 Unband WhatsApp V3 | Created with <i class="fas fa-heart" style="color: var(--tertiary);"></i> by LutfiDev</p>
-                <p style="margin-top: 15px;"></strong></p>
-                <div class="disclaimer">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Disclaimer: dilarang keras untuk memper jual belikan aplikasi.
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast"></div>
-
     <script>
-        // Data Templates dengan format baru
-        const templates = {
-            1: {
-                name: "Unband Template 1",
-                subject: "Request to Unban My WhatsApp Account",
-                message: `Subject: Request to Unban My WhatsApp Account
-
-Dear WhatsApp Support Team,
-
-I hope you are doing well. I recently found out that my WhatsApp account has been banned. I'm not sure why, but I've always tried to use WhatsApp responsibly. If I broke any rules without knowing, I truly apologize.
-
-Please review my account. I promise to follow all WhatsApp guidelines from now on. Thank you for your time and help.
-
-Best regards,  
-+62{phone}
-
----`
-            },
-            
-            2: {
-                name: "Unband Template 2",
-                subject: "Request to Unban My WhatsApp Number",
-                message: `Subject: Request to Unban My WhatsApp Number
+        // Teks unban yang telah ditentukan
+        const unbanTexts = {
+            1: "WhatsApp harap tinjau akun saya dan segera selesaikan masalah ini, karena saya tidak dapat menggunakannya, berikut ini nomor WhasApp saya 08736876xxx, terimakasih",
+            2: "Ketika saya membuka WhatsApp tiba-tiba muncul pesan akun tidak diizinkan menggunakan WhatsAPp karena spam. Saya tidak mengetahui kenapa ini terjadi, berikut nomor hp saya 0825235578xxx, mohon segera diperiksa.",
+            3: `Subject: Request to Unban My WhatsApp Number
 
 Dear WhatsApp Support Team,
 
@@ -1038,376 +394,97 @@ I'm writing about the ban on my WhatsApp account. I know using unofficial apps b
 From now on, I will only use the official WhatsApp app. Please consider unbanning my account. I rely on WhatsApp to stay in touch with family and work. Thank you for reviewing my request.
 
 Sincerely,
-+62{phone}
-
----`
-            },
-            
-            3: {
-                name: "Unband Template 3",
-                subject: "Appeal to Unban My WhatsApp Account",
-                message: `Subject: Appeal to Unban My WhatsApp Account
-
-Dear WhatsApp Support Team,
-
-I recently learned that my WhatsApp account was banned, possibly because of multiple reports. I think this might be a misunderstanding. I use WhatsApp to talk to family, manage work, and stay in touch with friends. I never meant to break WhatsApp's rules or bother anyone.
-
-If my actions caused any problems, I am truly sorry. I promise to be more careful with my activity in the future. Please review my account and consider unbanning it. WhatsApp is very important for my daily communication.
-
-Thank you for your time and understanding.  
-Sincerely,  
-+62{phone}
-
----`
-            }
+[Your Phone Number]`
         };
-
-        // Global Variables
-        let selectedTemplate = 1;
-        let phoneNumber = "";
-        let requestCount = parseInt(localStorage.getItem('requestCount')) || 1542;
-
-        // Initialize
+        
+        // Link untuk tombol
+        const updateLink = "https://whatsapp.com/channel/0029VbBx5iF545uyHuvE4Q2W";
+        const supportLink = "https://saweria.co/LutfiDev";
+        
+        // Variabel untuk menyimpan bug yang dipilih
+        let selectedBug = null;
+        
+        // Hapus animasi setelah selesai
         document.addEventListener('DOMContentLoaded', function() {
-            // Set default phone number placeholder
-            document.getElementById('phoneNumber').placeholder = "81234567890";
+            setTimeout(() => {
+                document.getElementById('devAnimation').style.display = 'none';
+            }, 3500);
             
-            // Initialize particles
-            createParticles();
-            
-            // Initialize stats with random animation
-            animateStats();
-            
-            // Add floating animation to particles
-            setInterval(moveParticles, 50);
-            
-            // Update stats periodically
-            setInterval(updateStats, 5000);
-        });
-
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random size and position
-                const size = Math.random() * 20 + 5;
-                const posX = Math.random() * 100;
-                const delay = Math.random() * 20;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.animationDelay = `${delay}s`;
-                
-                // Random color
-                const colors = [
-                    'rgba(0, 230, 118, 0.1)',
-                    'rgba(106, 17, 203, 0.1)',
-                    'rgba(255, 65, 108, 0.1)'
-                ];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Move particles for parallax effect
-        function moveParticles() {
-            const particles = document.querySelectorAll('.particle');
-            const scrollY = window.scrollY;
-            
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 0.5;
-                const currentTop = parseFloat(particle.style.top || '0%');
-                particle.style.top = `${(currentTop - speed) % 100}%`;
+            // Setup event listener untuk opsi bug
+            const bugOptions = document.querySelectorAll('.bug-option');
+            bugOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Hapus kelas active dari semua opsi
+                    bugOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Tambahkan kelas active ke opsi yang diklik
+                    this.classList.add('active');
+                    
+                    // Simpan bug yang dipilih
+                    selectedBug = this.getAttribute('data-bug');
+                });
             });
-        }
-
-        // Animate stats
-        function animateStats() {
-            const stats = {
-                totalRequests: 1542,
-                successRate: 92,
-                activeUsers: 3200,
-                avgTime: 32
-            };
             
-            Object.keys(stats).forEach((stat, index) => {
-                const element = document.getElementById(stat);
-                const target = stats[stat];
-                const current = parseInt(element.textContent.replace(/[^0-9]/g, '') || '0');
+            // Setup event listener untuk tombol kirim
+            document.getElementById('sendBtn').addEventListener('click', function() {
+                // Ambil nomor target
+                const targetNumber = document.getElementById('targetNumber').value.trim();
                 
-                animateNumber(element, current, target, 2000);
-            });
-        }
-
-        // Animate number counting
-        function animateNumber(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = Math.floor(progress * (end - start) + start);
+                // Validasi input
+                if (!targetNumber) {
+                    alert("Harap masukkan nomor target!");
+                    return;
+                }
                 
-                if (element.id === 'successRate') {
-                    element.textContent = `${value}%`;
-                } else if (element.id === 'avgTime') {
-                    element.textContent = `${value}s`;
+                if (!selectedBug) {
+                    alert("Harap pilih salah satu opsi unban!");
+                    return;
+                }
+                
+                // Ambil teks unban yang dipilih
+                let unbanText = unbanTexts[selectedBug];
+                
+                // Ganti placeholder dengan nomor target jika ada
+                if (selectedBug === '3') {
+                    unbanText = unbanText.replace("[Your Phone Number]", targetNumber);
                 } else {
-                    element.textContent = value.toLocaleString();
+                    // Untuk teks 1 dan 2, ganti nomor placeholder dengan nomor target
+                    unbanText = unbanText.replace(/08736876xxx|0825235578xxx/g, targetNumber);
                 }
                 
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Update stats randomly
-        function updateStats() {
-            const successRate = document.getElementById('successRate');
-            const currentRate = parseInt(successRate.textContent);
-            const newRate = Math.min(95, Math.max(85, currentRate + (Math.random() > 0.5 ? 1 : -1)));
-            
-            animateNumber(successRate, currentRate, newRate, 1000);
-        }
-
-        // Format Phone Number Input
-        function formatPhoneNumber(input) {
-            let value = input.value.replace(/\D/g, '');
-            
-            // Auto format: 812-3456-7890
-            if (value.length > 4 && value.length <= 8) {
-                value = value.replace(/(\d{3})(\d{1,4})/, '$1-$2');
-            } else if (value.length > 8) {
-                value = value.replace(/(\d{3})(\d{4})(\d{0,4})/, '$1-$2-$3');
-            }
-            
-            input.value = value;
-            phoneNumber = value.replace(/\D/g, '');
-        }
-
-        // Show template preview
-        function showPreview(templateId) {
-            const phoneInput = document.getElementById('phoneNumber');
-            let phone = phoneInput.value.replace(/\D/g, '');
-            
-            if (!phone || phone.length < 10) {
-                showToast('❌ Masukkan nomor WhatsApp dulu (minimal 10 digit)', true);
-                phoneInput.focus();
-                // Shake animation
-                phoneInput.parentElement.style.animation = 'none';
-                setTimeout(() => {
-                    phoneInput.parentElement.style.animation = 'shake 0.5s';
-                }, 10);
-                return;
-            }
-            
-            selectedTemplate = templateId;
-            const template = templates[templateId];
-            
-            // Update preview title
-            document.getElementById('previewTemplateTitle').textContent = template.name;
-            
-            // Format message for preview
-            const currentDate = new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            
-            let previewMessage = template.message
-                .replace(/{phone}/g, phone)
-                .replace(/{date}/g, currentDate);
-            
-            // Highlight phone number
-            previewMessage = previewMessage.replace(
-                `+62${phone}`, 
-                `<span class="preview-highlight">+62${phone}</span>`
-            );
-            
-            // Show preview
-            document.getElementById('previewContent').innerHTML = previewMessage;
-            document.getElementById('templatePreview').classList.add('show');
-            
-            // Scroll to preview
-            document.getElementById('templatePreview').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'nearest' 
-            });
-            
-            // Show send confirmation
-            setTimeout(() => {
-                if (confirm(`Gunakan template "${template.name}" dan kirim ke Gmail?`)) {
-                    sendUnbandRequest(templateId);
-                }
-            }, 500);
-        }
-
-        // Hide preview
-        function hidePreview() {
-            document.getElementById('templatePreview').classList.remove('show');
-        }
-
-        // Send Unband Request
-        function sendUnbandRequest(templateId) {
-            const phoneInput = document.getElementById('phoneNumber');
-            let phone = phoneInput.value.replace(/\D/g, '');
-            
-            // Validation
-            if (!phone || phone.length < 10) {
-                showToast('❌ Masukkan nomor WhatsApp yang valid (minimal 10 digit)', true);
-                phoneInput.focus();
-                return;
-            }
-            
-            // Hide preview
-            hidePreview();
-            
-            // Update request count
-            requestCount++;
-            localStorage.setItem('requestCount', requestCount);
-            document.getElementById('totalRequests').textContent = requestCount.toLocaleString();
-            
-            const template = templates[templateId];
-            const currentDate = new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            // Prepare email content
-            let message = template.message
-                .replace(/{phone}/g, phone)
-                .replace(/{date}/g, currentDate);
-            
-            // Add enhanced footer
-            message += `\n\n🔧 Sent via Unband WhatsApp V3 by LutfiDev
-📧 Tool Version: 3.0
-⏰ Timestamp: ${new Date().toISOString()}
-🌐 Generated from: ${window.location.hostname || 'Local'}`;
-
-            // Encode for mailto
-            const subject = encodeURIComponent(template.subject);
-            const body = encodeURIComponent(message);
-            
-            // EMAIL TUJUAN YANG DIUBAH
-            const recipient = "support@support.whatsapp.com";
-            
-            // Create enhanced mailto link
-            const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
-            
-            // Button click animation
-            const button = event.target.closest('.unband-btn');
-            if (button) {
-                button.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    button.style.transform = '';
-                }, 300);
-            }
-            
-            // Show sending animation
-            showToast(`📧 Membuka Gmail dengan ${template.name}...`);
-            
-            // Open email client with delay for animation
-            setTimeout(() => {
-                try {
-                    window.open(mailtoLink, '_blank', 'noopener,noreferrer');
-                } catch (e) {
-                    window.location.href = mailtoLink;
-                }
+                // Email tujuan
+                const emailTo = "support@support.whatsapp.com";
                 
-                // Show success message
-                setTimeout(() => {
-                    showToast('✅ Email siap dikirim! Periksa di Gmail Anda');
-                }, 1000);
-            }, 800);
-            
-            // Log the action
-            console.log('📧 Unband request sent:', {
-                template: template.name,
-                phone: `+62${phone}`,
-                recipient: recipient,
-                timestamp: new Date().toISOString(),
-                requestCount: requestCount
-            });
-        }
-
-        // Show Toast Notification
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            
-            // Clear any existing toast
-            toast.classList.remove('show');
-            
-            // Set message and style
-            toast.textContent = message;
-            toast.className = `toast ${isError ? 'error' : ''}`;
-            
-            // Trigger reflow for animation
-            void toast.offsetWidth;
-            
-            // Show toast
-            toast.classList.add('show');
-            
-            // Hide after duration
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, isError ? 4000 : 3000);
-        }
-
-        // Add shake animation keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Add hover sound effect simulation
-        document.querySelectorAll('.unband-btn, .footer-btn').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                this.style.transform = this.style.transform + ' scale(1.02)';
+                // Subjek email
+                const emailSubject = "Request Unban WhatsApp Account";
+                
+                // Encode komponen untuk URL mailto
+                const encodedSubject = encodeURIComponent(emailSubject);
+                const encodedBody = encodeURIComponent(unbanText);
+                
+                // Buat URL mailto
+                const mailtoUrl = `mailto:${emailTo}?subject=${encodedSubject}&body=${encodedBody}`;
+                
+                // Buka aplikasi email
+                window.location.href = mailtoUrl;
+                
+                // Tampilkan pesan konfirmasi
+                alert(`Request unban telah disiapkan untuk nomor ${targetNumber}.\nAplikasi email akan terbuka dengan teks yang sudah disiapkan.`);
             });
             
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = this.style.transform.replace(' scale(1.02)', '');
+            // Setup event listener untuk tombol info update
+            document.getElementById('updateBtn').addEventListener('click', function() {
+                window.open(updateLink, '_blank');
             });
-        });
-
-        // Add keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Ctrl + 1,2,3 for templates
-            if (e.ctrlKey) {
-                if (e.key === '1') showPreview(1);
-                if (e.key === '2') showPreview(2);
-                if (e.key === '3') showPreview(3);
-            }
-        });
-
-        // Add service worker-like functionality for offline
-        window.addEventListener('online', () => {
-            showToast('✅ Koneksi internet pulih!');
-        });
-
-        window.addEventListener('offline', () => {
-            showToast('⚠️ Anda sedang offline. Pastikan koneksi internet tersedia.', true);
+            
+            // Setup event listener untuk tombol support
+            document.getElementById('supportBtn').addEventListener('click', function() {
+                window.open(supportLink, '_blank');
+            });
+            
+            // Pilih opsi bug pertama secara default
+            document.querySelector('.bug-option[data-bug="1"]').classList.add('active');
+            selectedBug = '1';
         });
     </script>
 </body>
